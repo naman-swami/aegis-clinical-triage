@@ -1,24 +1,6 @@
-author: Naman Swami
-description: Autonomous clinical decision support and emergency symptom triage agent
-  adhering to evidence-based medical guidelines and maker-checker clinical safety
-  protocols.
-license: MIT
-model:
-  fallback:
-  - gpt-4o
-  - claude-3-sonnet
-  preferred: llama-3.3-70b-versatile
+spec_version: "0.1.0"
 name: aegis-clinical-triage
-runtime:
-  temperature: 0.2
-  timeout: 300
-skills:
-- symptom-triage
-- vital-signs-analysis
-- differential-ranking
-spec_version: 0.1.0
-tools:
-- assess-urgency
-- lookup-icd10
-- drug-interaction-check
-version: 0.1.0
+version: "0.1.0"
+description: "Autonomous clinical decision support and emergency symptom triage agent with evidence-based reasoning."
+model:
+  preferred: llama-3.3-70b-versatile
