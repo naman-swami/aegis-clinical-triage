@@ -1,0 +1,32 @@
+annotations:
+  cost: none
+  read_only: true
+  requires_confirmation: false
+description: Calculate clinical urgency tier (Emergency Severity Index 1-5).
+input_schema:
+  additionalProperties: false
+  properties:
+    onset_time:
+      type: string
+    symptoms:
+      type: string
+    vital_signs:
+      type: string
+  required:
+  - symptoms
+  - onset_time
+  type: object
+name: assess-urgency
+output_schema:
+  additionalProperties: false
+  properties:
+    confidence:
+      type: number
+    data:
+      type: string
+    status:
+      type: string
+  required:
+  - status
+  - data
+  type: object

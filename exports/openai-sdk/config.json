@@ -1,0 +1,28 @@
+{
+  "name": "aegis-clinical-triage",
+  "instructions": "You are aegis-clinical-triage. Accurately triage patient symptoms, assess emergency severity tiers, and provide structured, differential-oriented clinical recommendations.",
+  "model": "gpt-4o",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "assess-urgency",
+        "description": "Calculate clinical urgency tier (Emergency Severity Index 1-5)."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "lookup-icd10",
+        "description": "Search clinical diagnostic codes and disease classifications."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "drug-interaction-check",
+        "description": "Detect contraindications and pharmacokinetic adverse interactions."
+      }
+    }
+  ]
+}
