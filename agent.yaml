@@ -1,18 +1,7 @@
-author:
-  email: kgfg00100@gmail.com
-  github: naman-swami
-  name: Naman Swami
-categories:
-- Healthcare
+author: Naman Swami
 description: Autonomous clinical decision support and emergency symptom triage agent
   adhering to evidence-based medical guidelines and maker-checker clinical safety
   protocols.
-identity:
-  duties: DUTIES.md
-  explainability: EXPLAINABILITY.md
-  fallback_prompt: AGENTS.md
-  rules: RULES.md
-  soul: SOUL.md
 license: MIT
 model:
   fallback:
@@ -21,32 +10,15 @@ model:
   preferred: llama-3.3-70b-versatile
 name: aegis-clinical-triage
 runtime:
-  default_framework: openai-sdk
-  exports_directory: exports/
-  supported_frameworks:
-  - openai-sdk
-  - crewai
-  - claude-code
-  - lyzr
-  - langchain
+  temperature: 0.2
+  timeout: 300
 skills:
-- name: symptom-triage
-  path: skills/symptom-triage/
-- name: vital-signs-analysis
-  path: skills/vital-signs-analysis/
-- name: differential-ranking
-  path: skills/differential-ranking/
+- symptom-triage
+- vital-signs-analysis
+- differential-ranking
 spec_version: 0.1.0
-tags:
-- aegis
-- healthcare
-- opengap
-- portable-agent
 tools:
-- name: assess-urgency
-  path: tools/assess-urgency.yaml
-- name: lookup-icd10
-  path: tools/lookup-icd10.yaml
-- name: drug-interaction-check
-  path: tools/drug-interaction-check.yaml
+- assess-urgency
+- lookup-icd10
+- drug-interaction-check
 version: 0.1.0
