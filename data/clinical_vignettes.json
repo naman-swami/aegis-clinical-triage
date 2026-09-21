@@ -1,0 +1,53 @@
+[
+  {
+    "case_id": "ED-001",
+    "age": 62,
+    "presentation": "Sudden onset crushing substernal chest pain radiating to left jaw, diaphoresis.",
+    "vitals": {
+      "heart_rate": 118,
+      "respiratory_rate": 24,
+      "systolic_bp": 88,
+      "spo2": 93,
+      "temperature_c": 37.1,
+      "gcs": 15
+    },
+    "immediate_life_support": false,
+    "high_risk_flag": true,
+    "expected_resources": 3,
+    "gold_standard_esi": 2
+  },
+  {
+    "case_id": "ED-002",
+    "age": 24,
+    "presentation": "Inverted right ankle while playing basketball. Ambulatory with slight limp, localized swelling over lateral malleolus.",
+    "vitals": {
+      "heart_rate": 72,
+      "respiratory_rate": 14,
+      "systolic_bp": 120,
+      "spo2": 99,
+      "temperature_c": 36.8,
+      "gcs": 15
+    },
+    "immediate_life_support": false,
+    "high_risk_flag": false,
+    "expected_resources": 1,
+    "gold_standard_esi": 4
+  },
+  {
+    "case_id": "ED-003",
+    "age": 78,
+    "presentation": "Unresponsive on arrival, agonal breathing, absent peripheral pulse.",
+    "vitals": {
+      "heart_rate": 30,
+      "respiratory_rate": 6,
+      "systolic_bp": 50,
+      "spo2": 65,
+      "temperature_c": 35.4,
+      "gcs": 3
+    },
+    "immediate_life_support": true,
+    "high_risk_flag": true,
+    "expected_resources": 5,
+    "gold_standard_esi": 1
+  }
+]

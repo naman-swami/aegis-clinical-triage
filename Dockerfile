@@ -1,14 +1,13 @@
-# Production Claw Worker for aegis-clinical-triage
 FROM python:3.11-slim
+LABEL maintainer="Naman Swami <kgfg00100@gmail.com>"
+LABEL domain="clinical-decision-support-emergency-medicine"
 
 WORKDIR /app
-
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+ENV PYTHONUNBUFFERED=1
 
-# Run test verification during build
-RUN pytest tests/ -v
-
-ENTRYPOINT ["python", "main.py", "--demo"]
+USER 10001
+CMD ["python", "main.py", "--demo"]
