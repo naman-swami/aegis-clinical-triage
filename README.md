@@ -56,7 +56,7 @@ aegis-clinical-triage/
 │   └── clinical_vignettes.json      # Gold-standard reference patient cases
 ├── tests/
 │   └── test_agent.py                # Clinical triage accuracy test suite
-├── main.py                          # CDSS CLI
+├── triage.py                          # CDSS CLI
 └── requirements.txt
 ```
 
@@ -67,7 +67,7 @@ aegis-clinical-triage/
 pytest tests/ -v
 
 # Evaluate benchmark clinical cases
-python main.py --demo
+python triage.py --demo
 ```
 
 ## Medical Device Notice
