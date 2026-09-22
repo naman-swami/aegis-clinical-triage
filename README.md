@@ -1,75 +1,59 @@
-# Aegis Clinical Triage CDSS
+# Aegis Clinical Decision Support System (CDSS)
 
-[![OpenGAP](https://img.shields.io/badge/OpenGAP-0.1.0-blue.svg)](agent.yaml)
-[![Healthcare](https://img.shields.io/badge/Domain-Emergency_Medicine_CDSS-darkred.svg)](protocols/esi_v4_protocol.md)
-[![Standard](https://img.shields.io/badge/Protocol-ESI_v4_Standard-orange.svg)](protocols/esi_v4_protocol.md)
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](requirements.txt)
-[![CI](https://img.shields.io/badge/CI-Passing-brightgreen.svg)](.github/workflows/ci.yml)
+> **Emergency Severity Index (ESI v4) & Hemodynamic Sepsis Triage Engine**  
+> Operationalizing Shock Index, qSOFA Criteria, and Acuity Stratification for Emergency Departments.
 
-A clinical decision support system (CDSS) for emergency departments conforming to ACEP and ESI v4 standards, incorporating physiological shock index calculation and qSOFA sepsis screening.
+---
 
-```
-                    ┌─────────────────────────┐
-                    │ Patient Presentation    │
-                    │   & Vitals Telemetry    │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │   Physiological Shock   │
-                    │   & qSOFA Sepsis Check  │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │   ESI v4 Decision Tree  │
-                    │   (Levels 1 through 5)  │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │ Bedside Placement Alert │
-                    │ (IMMEDIATE / <10m / etc)│
-                    └─────────────────────────┘
-```
+> [!CAUTION]
+> **Clinical Software as a Medical Device (SaMD) Notice**: Aegis is an algorithmic clinical decision support prototype designed for triage education and protocol verification. It does not replace independent physician diagnosis. Review [CLINICAL_NOTICE.md](CLINICAL_NOTICE.md) before deployment.
 
-## Features
+---
 
-- **ESI v4 Decision Logic**: Stratifies acute emergency arrivals across Level 1 (Resuscitation) to Level 5 (Non-urgent).
-- **qSOFA Sepsis Screening**: Real-time evaluation of organ dysfunction criteria (respiratory rate $\ge 22$, mentation GCS $< 15$, SBP $\le 100$).
-- **Shock Index Monitoring**: Early detection of occult hemodynamic collapse ($	ext{HR} / 	ext{SBP} > 0.9$).
-- **Vitals Schema Validation**: Built-in JSON Schema enforcing clinical observational limits.
-
-## Directory Structure
+### Emergency Severity Index (ESI v4) Acuity Algorithm
 
 ```
-aegis-clinical-triage/
-├── agent.yaml                       # OpenGAP 0.1.0 Manifest
-├── EXPLAINABILITY.md                # 7-checkpoint medical decision provenance
-├── decision_support/
-│   └── triage_evaluator.py          # Clinical acuity & sepsis scoring engine
-├── protocols/
-│   └── esi_v4_protocol.md           # ACEP clinical decision standard
-├── schemas/
-│   └── vitals_record.schema.json    # JSON Schema for vital observations
-├── data/
-│   └── clinical_vignettes.json      # Gold-standard reference patient cases
-├── tests/
-│   └── test_agent.py                # Clinical triage accuracy test suite
-├── triage.py                          # CDSS CLI
-└── requirements.txt
+                 Patient Arrival (Vitals & Chief Complaint)
+                                   │
+                    Does patient require immediate
+                   life-saving intervention? (Airway/SpO2/Arrest)
+                                  / \
+                            YES  /   \  NO
+                                /     \
+                         LEVEL 1       Is this a high-risk situation?
+                       (Resuscitation) Confused/Lethargic? Severe Pain?
+                                              / \
+                                        YES  /   \  NO
+                                            /     \
+                                     LEVEL 2       How many diagnostic/treatment
+                                    (Emergent)     resources are required?
+                                                          /   |   \
+                                                        None One  Two+
+                                                         /    |     \
+                                                    LEVEL 5 LEVEL 4 LEVEL 3
 ```
 
-## Quick Start
+---
+
+### Hemodynamic Risk Formulations
+
+1. **Shock Index (SI)**:
+   $$SI = \frac{\text{Heart Rate (BPM)}}{\text{Systolic Blood Pressure (mmHg)}} \quad (\text{Normal: } 0.5 - 0.7; \text{ Critical Shock: } > 0.9)$$
+2. **qSOFA Sepsis Screening** ($\ge 2$ triggers sepsis alert):
+   - Respiratory Rate $\ge 22$ breaths/min (+1)
+   - Altered Mental Status ($	ext{GCS} < 15$) (+1)
+   - Systolic Blood Pressure $\le 100$ mmHg (+1)
+
+---
+
+### Triage Case Study Evaluation
 
 ```bash
-# Run triage test suite
-pytest tests/ -v
-
-# Evaluate benchmark clinical cases
+# Evaluate real clinical vignettes from data/clinical_vignettes.json
 python triage.py --demo
+
+# Run clinical protocol validation tests
+pytest tests/ -v
 ```
 
-## Medical Device Notice
-
-This software is an educational and investigational clinical decision support aid. It does not replace the independent medical judgment of a licensed emergency physician or triage nurse.
+Standard triage schemas and vital sign ranges are strictly validated using `schemas/vitals_record.schema.json`. See [EXPLAINABILITY.md](EXPLAINABILITY.md) for full clinical reasoning pathways.
